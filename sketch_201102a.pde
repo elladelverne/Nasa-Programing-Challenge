@@ -1,25 +1,12 @@
 int cols,rows,h,w;
-int scl = 5;
+int scl = 10;
 Table table;
 
 void setup() {
   size(600,600,P3D);
-  w = 20000;
-  h = 20000;
-  cols = w / scl;
-  rows = h / scl;
   table = loadTable("Data_Table.csv", "header");
-  
-  //for (TableRow row : table.rows()) {
 
-  //float lat = row.getFloat("Latitude");
-  //float lon = row.getFloat("Longitude");
-  //float slope = row.getFloat("Slope");
-  //int h = row.getInt("Height");
- // }
 }
-
-
 
 void draw() {
   //visual setup
@@ -27,24 +14,27 @@ void draw() {
   stroke(255);
   noFill();
   
-  translate(width/2, height/2, -400);
+  translate(width/2, height/2);
   rotateX(PI/3);
-
-  //translate(-w/2, -h/2);
-  
   //creating the mesh that will become the terrain
    beginShape(TRIANGLE_STRIP);
-  for (TableRow row : table.rows()) {
+  for (int i = 0; i<table.getRowCount(); i++) {
+    TableRow row = table.getRow(i);
     float lat = row.getFloat("Latitude");
     float lon = row.getFloat("Longitude");
     float slope = row.getFloat("Slope");
-    int h = row.getInt("Height");
-     
-     float y = lat;
-     float x = lon;
-     
-     vertex(x*scl, y*scl, h*scl);
-    // vertex(x*scl, (y-1)*scl);
+    int h = row.getInt("Height");    
+    
+    float y = lat;
+    float x = lon;
+    vertex(x*scl, y*scl, h*scl);
+    
+    TableRow newRow = table.getRow(i++);
+    float lat2 = newRow.getFloat("Latitude");
+
+    float y2 = lat2;
+
+    vertex(x*scl, y2*scl);
       
     }
     endShape();
