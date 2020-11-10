@@ -1,4 +1,3 @@
-int cols,rows,h,w;
 int scl = 10;
 Table table;
 
@@ -29,6 +28,8 @@ void draw() {
     float x = lon;
     vertex(x*scl, y*scl, h*scl);
     
+    
+    //grabbing the new row specifically it's y value to use for the second vertex!
     TableRow newRow = table.getRow(i++);
     float lat2 = newRow.getFloat("Latitude");
 
